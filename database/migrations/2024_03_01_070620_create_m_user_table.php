@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id('user_id');
             $table->unsignedBIgInteger('level_id')->index();//indexing untuk foreignkey
             $table->String('nama',100);
-            $table->String('password');
+            $table->String('username',20);
+            $table->String('password',255);
             $table->timestamps();
 
             //mendefinisikan foreign key pada kolom level id mengacu pada kolom level id di tabel m_level

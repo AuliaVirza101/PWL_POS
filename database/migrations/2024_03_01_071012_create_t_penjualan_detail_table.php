@@ -1,34 +1,37 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace Database\Seeders;
 
-return new class extends Migration
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class PenjualanDetailSeeder extends Seeder
 {
     /**
-     * Run the migrations.
+     * Run the database seeds.
      */
-    public function up(): void
+    public function run(): void
     {
-        Schema::create('t_penjualan_detail', function (Blueprint $table) {
-            $table->id('detail_id');
-            $table->unsignedBigInteger('penjualan_id')->index();
-            $table->unsignedBigInteger('barang_id')->index();
-            $table->integer('harga');
-            $table->integer('jumlah');
-            $table->timestamps();
+        $totalData = 30; // Total number of records
+        $salesTransactions = 10; // Number of sales transactions
+        $itemsPerTransaction = 3; // Number of items per transaction
 
-            $table->foreign('penjualan_id')->references('penjualan_id')->on('t_penjualan');
-            $table->foreign('barang_id')->references('barang_id')->on('m_barang');
-        });
-    }
+        for ($i = 1; $i <= $totalData; $i++) {
+            $penjualanId = ceil($i / $itemsPerTransaction); // Calculate sales transaction ID
+            $barangId = rand(1, 3); // Randomly select barang_id
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('t_penjualan_detail');
+            $data = [
+                'penjualan_id' => $penjualanId,
+                'barang_id' => $barangId,
+                'harga' => rand(1000, 5000), // Harga barang
+                'jumlah' => rand(1, 10), // Jumlah barang terjual
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+
+            // Memasukkan data ke dalam tabel t_penjualan_detail
+            DB::table('t_penjualan_detail')->insert($data);
+        }
     }
-};
+}
