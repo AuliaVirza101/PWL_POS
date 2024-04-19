@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\LevelModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,6 +19,20 @@ class LevelController extends Controller
         // return 'Delete data berhasil.Jumlah data yang dihapus: '. $row.' baris';
     
         $data = DB::select('select * from m_level');
-        return view('level',['data' => $data]);
+        // return view('level',['data' => $data]);
+    }
+    public function tambah(){
+        return view ('level_tambah');
+    }
+    public function tambah_simpan(request $request){
+        
+        $validated = $request->validated();
+        
+        $validated = $request->safe()->only(['level_kode', 'level_nama']);
+        $validated = $request->safe()->except(['level_kode', 'level_nama']);
+        
+        LevelModel::create($validated);
+
+        return redirect('/level');
     }
 }

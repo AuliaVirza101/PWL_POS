@@ -99,20 +99,23 @@ class UserController extends Controller
     // $user->wasChanged('nama');//false
     // dd($user->wasChanged(['nama','username']));//true
     
+    // $user = UserModel::with('level')->get();
+    // return view('user', ['data'=>$user]);  
     $user = UserModel::with('level')->get();
-    return view('user', ['data'=>$user]);   
+    return view('user', ['data' => $user]);
 }
 
 public function tambah(){
     return view ('user_tambah');
 }
 public function tambah_simpan(request $request){
-    UserModel::create([
-        'username'=> $request->username,
-        'nama'=>$request->nama,
-        'password'=> Hash::make($request->password),
-        'level_id' => $request->level_id
-    ]);
+    $validated = $request->validated();
+        
+    $validated = $request->safe()->only(['username', 'nama','password','level_id']);
+    $validated = $request->safe()->except(['username', 'nama','password','level_id']);
+    
+    UserModel::create($validated);
+    
     return redirect('/user');
 }
 
