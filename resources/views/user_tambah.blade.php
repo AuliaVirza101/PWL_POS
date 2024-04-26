@@ -49,10 +49,10 @@
                 </div>
                 <div class="form-group">
                     <label>Select</label>
-                    <select class="form-control">
-                      <option> 1</option>
-                      <option> 2</option>
-                      <option> 3</option>
+                    <select name="level_id" class="form-control">
+                      <option value="1"> 1</option>
+                      <option value="2"> 2</option>
+                      <option value="3"> 3</option>
                     </select>
                   </div>
             </div>

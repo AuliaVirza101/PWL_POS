@@ -10,7 +10,7 @@
             <h3 class="card-title">buat kategori baru</h3>
         </div>
 
-        <form method="post" action=".../kategori">
+        <form method="post" action="{{ route('kategori/store')}} ">
             <div class="card-body">
             @if ($errors->any())
                 <div class="alert alert-dager">
@@ -23,16 +23,16 @@
             @endif
 
                 <div class="form-group">
-                    <label for="kodeKategori">Kode Kategori</label>
-                    <input id="kodeKategori" type="text" name="kodeKategori" class="@error('kodeKategori') is-invalid @enderror">
+                    <label for="kodeKategori">Kode kategori baru</label>
                     @error('kodeKategori')
                         <div class="alert alert-danger">{{$message}}"</div>
                     @enderror
-                    <input id="text" class='form-control' id="kodeKategori" name="kodeKategori" placehold="Enter Kode Kategori" required>
+                    <input id="kodeKategori" type="text" name="kodeKategori" class="@error('kodeKategori') is-invalid @enderror">
+                    {{-- <input id="text" class='form-control' id="kodeKategori" name="kodeKategori" placehold="Enter Kode Kategori" required> --}}
                 </div>
 
                 <div class="form-group">
-                    <label for="namaKategori">Nama Kategori</label>
+                    <label for="namaKategori">Nama Kategori baru</label>
                     <input type="text" class="form-control" id='kodeKategori' name="kodeKAtegori" placehold="Enter Nama Kategori" required>
                 </div>
             </div>
