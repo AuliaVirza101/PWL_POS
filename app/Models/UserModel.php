@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
-class UserModel extends Model
+class UserModel extends Model implements AuthenticatableContract
 {
    
     use HasFactory;
@@ -25,5 +26,35 @@ class UserModel extends Model
     public function level(): Belongsto 
     {
         return $this->belongsTo(LevelModel::class, 'level_id', 'level_id');
+    }
+      // Implement methods from AuthenticatableContract
+      public function getAuthIdentifierName()
+      {
+          return 'user_id';
+      }
+  
+      public function getAuthIdentifier()
+      {
+          return $this->getKey();
+      }
+  
+      public function getAuthPassword()
+      {
+          return $this->password;
+      }
+        // Methods related to remember tokens
+    public function getRememberToken()
+    {
+        return $this->remember_token;
+    }
+
+    public function setRememberToken($value)
+    {
+        $this->remember_token = $value;
+    }
+
+    public function getRememberTokenName()
+    {
+        return 'remember_token';
     }
 }
