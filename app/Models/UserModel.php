@@ -4,13 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Tymon\JWTAuth\contracts\JWTSubject;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class UserModel extends Model implements AuthenticatableContract
+class UserModel extends Authenticatable implements JWTSubject
 {
-   
+ 
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims() {
+        return [];
+    }
+    
     use HasFactory;
     protected $table = "m_user";
     public $timestamps = false;
@@ -27,34 +36,5 @@ class UserModel extends Model implements AuthenticatableContract
     {
         return $this->belongsTo(LevelModel::class, 'level_id', 'level_id');
     }
-      // Implement methods from AuthenticatableContract
-      public function getAuthIdentifierName()
-      {
-          return 'user_id';
-      }
-  
-      public function getAuthIdentifier()
-      {
-          return $this->getKey();
-      }
-  
-      public function getAuthPassword()
-      {
-          return $this->password;
-      }
-        // Methods related to remember tokens
-    public function getRememberToken()
-    {
-        return $this->remember_token;
-    }
-
-    public function setRememberToken($value)
-    {
-        $this->remember_token = $value;
-    }
-
-    public function getRememberTokenName()
-    {
-        return 'remember_token';
-    }
+    
 }
